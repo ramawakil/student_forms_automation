@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import {Route, Routes} from "react-router-dom";
+import LoadingContext from "./app/context/loadingContext";
+import AppLoadingScreen from "./app/components/AppLoadingScreen";
+import UserContext from "./app/context/userContext";
+import {useState} from "react";
+import HomePage from "./app/pages/home";
+import LoginPage from "./app/pages/loginPage";
+import StudentHome from "./app/pages/students/studentHome";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState(null);
+
+    return (
+        <>
+            <LoadingContext.Provider value={{loading, setLoading}}>
+                <UserContext.Provider value={{user, setUser}}>
+                    {/* here we should have three basic routes for farmer | farm Leader | Company Employee  */}
+                    <AppLoadingScreen loading={loading}/>
+                    <Routes>
+                        <Route path='' element={<HomePage/>}/>
+                        <Route path="/login"
+                               element={<LoginPage/>}/>
+                        <Route path="/student-requests/*" element={<StudentHome/>}/>
+                    </Routes>
+                </UserContext.Provider>
+            </LoadingContext.Provider>
+        </>
+    );
 }
 
 export default App;
