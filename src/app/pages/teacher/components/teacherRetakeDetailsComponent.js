@@ -13,14 +13,6 @@ function TeacherRetakeDetailsComponent({record}) {
         setSignFormVisible(true)
     }
 
-    const handleEditForm = () => {
-
-    }
-
-    const handleDeleteForm = () => {
-
-    }
-
     return (
         <>
             <Box sx={{}}>
@@ -49,16 +41,17 @@ function TeacherRetakeDetailsComponent({record}) {
                 <AppText>Year of Retake: {record?.year_of_retake}</AppText>
 
 
-                <Box sx={{ display: 'flex', mt: 4 }}>
-                    <Box sx={{ flexGrow: 0.5 }}></Box>
+                { !signFormVisible && <Box sx={{display: 'flex', mt: 4}}>
+                    <Box sx={{flexGrow: 0.5}}></Box>
                     <Box sx={{
                         textAlign: 'center'
                     }}>
-                        <AppIconButton label='Signature' onPress={handleShowForm} icon={<FingerprintIcon fontSize='large' color='success'/>}/>
+                        <AppIconButton label='Signature' onPress={handleShowForm}
+                                       icon={<FingerprintIcon fontSize='large' color='success'/>}/>
                         <AppText color='primary'>Click to Sign</AppText>
                     </Box>
 
-                </Box>
+                </Box>}
 
                 {
                     signFormVisible && <TeacherSignatureFormComponent record={null} />

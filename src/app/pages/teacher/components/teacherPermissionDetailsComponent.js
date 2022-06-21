@@ -1,20 +1,15 @@
 import React, {useState} from 'react';
-import {useLocation} from "react-router-dom";
 import {Box} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
 import AppText from "../../../components/AppText";
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import TeacherSignatureFormComponent from "../teacherSignatureFormComponent";
 
-function TeacherPermissionDetailsComponent({ record }) {
+function TeacherPermissionDetailsComponent({record}) {
     const [signFormVisible, setSignFormVisible] = useState(false);
 
     const handleShowForm = () => {
         setSignFormVisible(true)
-    }
-
-    const handleDeleteForm = () => {
-
     }
 
     return (
@@ -33,21 +28,21 @@ function TeacherPermissionDetailsComponent({ record }) {
                 <AppText>{record?.description}</AppText>
                 <AppText>Semester {record?.semester_of_study}</AppText>
 
-                <Box sx={{ display: 'flex', mt: 4 }}>
-                    <Box sx={{ flexGrow: 0.5 }}></Box>
+                {!signFormVisible && <Box sx={{display: 'flex', mt: 4}}>
+                    <Box sx={{flexGrow: 0.5}}></Box>
                     <Box sx={{
                         textAlign: 'center'
                     }}>
-                        <AppIconButton label='Signature' onPress={handleShowForm} icon={<FingerprintIcon fontSize='large' color='success'/>}/>
+                        <AppIconButton label='Signature' onPress={handleShowForm}
+                                       icon={<FingerprintIcon fontSize='large' color='success'/>}/>
                         <AppText color='primary'>Click to Sign</AppText>
                     </Box>
 
-                </Box>
+                </Box>}
 
                 {
-                    signFormVisible && <TeacherSignatureFormComponent record={null} />
+                    signFormVisible && <TeacherSignatureFormComponent record={null}/>
                 }
-
 
 
             </Box>

@@ -1,5 +1,4 @@
-import React, {useState, useContext} from 'react';
-import LoadingContext from "../../context/loadingContext";
+import React, {useState} from 'react';
 import {Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack} from "@mui/material";
 import AppTextInput from "../../components/AppTextInput";
 import AppButton from "../../components/AppButton";
@@ -26,9 +25,9 @@ const ValidationSchema = Yup.object().shape({
 
 function AddStudent(props) {
     const [open, setOpen] = React.useState(false);
-    const [student, students] = useState([])
-    const [error, setError] = React.useState(null);
-    const {setLoading} = useContext(LoadingContext);
+    const [students, setStudents] = useState([])
+    // const [error, setError] = React.useState(null);
+    // const {setLoading} = useContext(LoadingContext);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -116,7 +115,7 @@ function AddStudent(props) {
                             },
                         ]}
                         />
-                        <AppFormSelectField name='department'   label='Department' choices={[
+                        <AppFormSelectField name='department' label='Department' choices={[
                             {
                                 label: 'Computer Science',
                                 value: 'Computer Science'
@@ -125,7 +124,7 @@ function AddStudent(props) {
                                 label: 'Information Technology',
                                 value: 'Information Technology'
                             }
-                            ]}
+                        ]}
                         />
 
                         <DialogActions>

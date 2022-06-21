@@ -5,13 +5,14 @@ import AppFormField from "../../components/forms/AppFormField";
 import AppFormSwitch from "../../components/forms/AppFormSwitch";
 import AppSubmitButton from "../../components/forms/AppSubmitButton";
 import {Box} from "@mui/material";
+import AppButton from "../../components/AppButton";
 
 const ValidationSchema = Yup.object().shape({
     comment: Yup.string().required('Comment is required'),
     approved: Yup.boolean().required('Approved is required'),
 })
 
-function TeacherSignatureFormComponent({ record }) {
+function TeacherSignatureFormComponent({ record, hide }) {
 
     const handleSubmit = async (values) => {
         console.log(values);
@@ -40,9 +41,11 @@ function TeacherSignatureFormComponent({ record }) {
 
                 <Box
                     sx={{
-                        textAlign: 'center',
+                        display: 'flex',
+                        justifyContent: 'space-between',
                     }}
                 >
+                    <AppButton title='Cancel' variant='outlined' onPress={hide} color='warning'/>
                     <AppSubmitButton variant='contained' color='success' fullWidth={false} title='Confirm Signature' />
                 </Box>
 

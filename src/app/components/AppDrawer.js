@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {styled, useTheme} from "@mui/material/styles";
-import {Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import {Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 
@@ -18,7 +16,7 @@ const DrawerHeader = styled('div')(({theme}) => ({
 }));
 
 function AppDrawer({drawerWidth, open, handleDrawerClose, navList}) {
-    const [navLs, setNavLs] = useState(navList);
+    const [navLs] = useState(navList);
     const theme = useTheme();
 
     return (
@@ -43,8 +41,8 @@ function AppDrawer({drawerWidth, open, handleDrawerClose, navList}) {
                 </DrawerHeader>
                 <Divider/>
                 <List>
-                    { navLs?.map((item) => (
-                        <Link to={item.link} style={{ textDecoration: 'none', color: 'grey' }} key={item.id}>
+                    {navLs?.map((item) => (
+                        <Link to={item.link} style={{textDecoration: 'none', color: 'grey'}} key={item.id}>
                             <ListItem button key={item.link}>
                                 <ListItemIcon>
                                     {item.icon}
@@ -52,7 +50,7 @@ function AppDrawer({drawerWidth, open, handleDrawerClose, navList}) {
                                 <ListItemText primary={item.name}/>
                             </ListItem>
                         </Link>
-                    )) }
+                    ))}
                 </List>
                 <Divider/>
             </Drawer>

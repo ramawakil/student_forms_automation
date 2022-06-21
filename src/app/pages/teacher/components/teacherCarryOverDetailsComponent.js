@@ -1,25 +1,19 @@
 import React, {useState} from 'react';
-import {useLocation} from "react-router-dom";
 import {Box} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
 import AppText from "../../../components/AppText";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import TeacherSignatureFormComponent from "../teacherSignatureFormComponent";
 
-function TeacherCarryOverDetailsComponent({ record }) {
+function TeacherCarryOverDetailsComponent({record}) {
     const [signFormVisible, setSignFormVisible] = useState(false);
 
     const handleShowForm = () => {
         setSignFormVisible(true)
     }
 
-
-    const handleEditForm = () => {
-
-    }
-
-    const handleDeleteForm = () => {
-
+    const handleHideForm = () => {
+        setSignFormVisible(false)
     }
 
     return (
@@ -45,22 +39,21 @@ function TeacherCarryOverDetailsComponent({ record }) {
                     <AppText>Code: {record?.module_code}</AppText>
                 </Box>
 
-                <Box sx={{ display: 'flex', mt: 4 }}>
-                    <Box sx={{ flexGrow: 0.5 }}></Box>
+                {!signFormVisible && <Box sx={{display: 'flex', mt: 4}}>
+                    <Box sx={{flexGrow: 0.5}}></Box>
                     <Box sx={{
                         textAlign: 'center'
                     }}>
-                        <AppIconButton label='Signature' onPress={handleShowForm} icon={<FingerprintIcon fontSize='large' color='success'/>}/>
+                        <AppIconButton label='Signature' onPress={handleShowForm}
+                                       icon={<FingerprintIcon fontSize='large' color='success'/>}/>
                         <AppText color='primary'>Click to Sign</AppText>
                     </Box>
 
-                </Box>
+                </Box>}
 
                 {
-                    signFormVisible && <TeacherSignatureFormComponent record={null} />
+                    signFormVisible && <TeacherSignatureFormComponent hide={handleHideForm} record={null}/>
                 }
-
-
 
             </Box>
         </>
