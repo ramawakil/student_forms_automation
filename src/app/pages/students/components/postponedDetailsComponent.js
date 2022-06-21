@@ -1,13 +1,12 @@
 import React from 'react';
+import {useLocation} from "react-router-dom";
 import {Box, Divider, Switch} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AppText from "../../../components/AppText";
-import {useLocation} from "react-router-dom";
 
-
-function PermissionDetailsComponent({ openDialog }) {
+function PostponedDetailsComponent({ openDialog }) {
     const params = useLocation();
     const record = params.state.data;
 
@@ -34,9 +33,10 @@ function PermissionDetailsComponent({ openDialog }) {
                 </Box>
 
                 <AppText>Eligibility of request: {record.request_status}</AppText>
-                <AppText>{record?.request_reason} Reason for Permission</AppText>
+                <AppText>{record?.request_reason} Reason for Postpone a Course</AppText>
                 <AppText>{record?.description}</AppText>
                 <AppText>Semester {record?.semester_of_study}</AppText>
+
                 <Box sx={{
                     marginY: 2,
                     display: 'flex'
@@ -60,12 +60,15 @@ function PermissionDetailsComponent({ openDialog }) {
                     <Switch checked={record?.dean_signed_approve} disabled={true} />
                 </Box>
 
+                <AppText>{record?.starting_date}</AppText>
+                <AppText>{record?.ending_date}</AppText>
+
                 <Divider />
 
                 {
                     record?.signatures ? (
                         record?.signatures.maps((signature) => {
-                            <AppText>{signature.comments}</AppText>
+                            <AppText>{signature?.comments}</AppText>
                         })
                     ) : (
                         <AppText variant='h6' color='accent.main'>No Feedback yet</AppText>
@@ -80,4 +83,4 @@ function PermissionDetailsComponent({ openDialog }) {
     );
 }
 
-export default PermissionDetailsComponent;
+export default PostponedDetailsComponent;

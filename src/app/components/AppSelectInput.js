@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box, MenuItem} from "@mui/material";
 import AppTextInput from "./AppTextInput";
+import AppText from "./AppText";
 
 function AppSelectInput({ choices, label, width = '100%', value, setValue, ...otherProps }) {
     return (
@@ -8,9 +9,11 @@ function AppSelectInput({ choices, label, width = '100%', value, setValue, ...ot
             <Box sx={{
 
             }}>
+                <AppText sx={{ ml: 1 }} color='icon.main'>{label}</AppText>
                 <AppTextInput
                     select
                     label={label}
+                    placeholder={label}
                     value={value}
                     {...otherProps}
                     setValue={(val) => setValue(val)}

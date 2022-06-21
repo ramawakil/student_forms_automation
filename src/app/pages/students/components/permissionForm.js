@@ -14,10 +14,14 @@ const ValidationSchema = Yup.object().shape({
 });
 
 
-function PermissionForm({ handleClose }) {
+function PermissionForm({ handleClose, record = null }) {
 
     const handleSubmit = async (values) => {
         console.log(values);
+    }
+
+    const handleSubmitEdit = async (values) => {
+
     }
 
     return (
@@ -28,11 +32,11 @@ function PermissionForm({ handleClose }) {
 
             <AppForm
                 initialValues={{
-                    reason: '',
-                    request_description: '',
-                    semester_of_study: '',
+                    reason: `${ record ? record?.request_reason : ""}`,
+                    request_description: `${record ? record?.request_description : ""}`,
+                    semester_of_study: `${record ? record?.semester_of_study : ""}`,
                 }}
-                onSubmit={handleSubmit}
+                onSubmit={!record ? handleSubmit : handleSubmitEdit}
                 validationSchema={ValidationSchema}
             >
 

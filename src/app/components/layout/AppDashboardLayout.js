@@ -6,7 +6,7 @@ import AppNavBar from "../AppNavBar";
 import AppDrawer from "../AppDrawer";
 import UserContext from "../../context/userContext";
 
-const drawerWidth = 200;
+const drawerWidth = 240;
 
 const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
     ({theme, open}) => ({
@@ -37,9 +37,9 @@ const DrawerHeader = styled('div')(({theme}) => ({
     justifyContent: 'flex-end',
 }));
 
-function AppDashboardLayout({ children }) {
+function AppDashboardLayout({ children, navList, openSideBar }) {
     const {user} = useContext(UserContext);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(openSideBar);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -51,13 +51,17 @@ function AppDashboardLayout({ children }) {
 
     return (
         <>
-            <Box sx={{display: 'flex'}}>
-                <CssBaseline/>
+            <Box sx={{
+                display: 'flex',
+            }}>
+                <CssBaseline />
                 <AppNavBar open={open} showButton={!open} handleDrawerClose={handleDrawerClose} handleDrawerOpen={handleDrawerOpen}/>
-               <AppDrawer drawerWidth={drawerWidth} open={open} handleDrawerClose={handleDrawerClose}/>
-                <Toolbar/>
+
+
+
                 <Main open={open}>
-                    <Toolbar />
+                    <AppDrawer drawerWidth={drawerWidth} open={open} handleDrawerClose={handleDrawerClose} navList={navList} />
+                    {/*<Toolbar/>*/}
                     {children}
                 </Main>
             </Box>

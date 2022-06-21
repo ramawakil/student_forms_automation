@@ -17,10 +17,14 @@ const ValidationSchema = Yup.object().shape({
     semester_of_study: Yup.string().required('Semester required'),
 });
 
-function CarryOverForm({ handleClose }) {
+function CarryOverForm({ handleClose, record = null }) {
 
     const handleSubmit = async (values) => {
         console.log(values);
+    }
+
+    const handleSubmitEdit = async (values) => {
+
     }
 
     return (
@@ -30,15 +34,15 @@ function CarryOverForm({ handleClose }) {
             </DialogContentText>
             <AppForm
                 initialValues={{
-                    reason: '',
-                    request_description: '',
-                    course: '',
-                    module_name: '',
-                    module_code: '',
-                    assessment_marks: '',
-                    semester_of_study: '',
+                    reason: `${record ? record?.request_reason : ""}`,
+                    request_description: `${record ? record?.request_description : ""}`,
+                    course: `${record ? record?.course : ""}`,
+                    module_name: `${record ? record?.module_name : ""}`,
+                    module_code: `${record ? record?.module_code : ""}`,
+                    assessment_marks: `${record ? record?.assessment_mark : ""}`,
+                    semester_of_study: `${record ? record?.semester_of_study : ""}`,
                 }}
-                onSubmit={handleSubmit}
+                onSubmit={!record ? handleSubmit : handleSubmitEdit}
                 validationSchema={ValidationSchema}
             >
 

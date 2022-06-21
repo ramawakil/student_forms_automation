@@ -1,13 +1,12 @@
 import React from 'react';
+import {useLocation} from "react-router-dom";
 import {Box, Divider, Switch} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AppText from "../../../components/AppText";
-import {useLocation} from "react-router-dom";
 
-
-function PermissionDetailsComponent({ openDialog }) {
+function CarryOverDetailsComponent({ openDialog }) {
     const params = useLocation();
     const record = params.state.data;
 
@@ -34,9 +33,18 @@ function PermissionDetailsComponent({ openDialog }) {
                 </Box>
 
                 <AppText>Eligibility of request: {record.request_status}</AppText>
-                <AppText>{record?.request_reason} Reason for Permission</AppText>
+                <AppText>{record?.request_reason} Reason for Carry Over</AppText>
                 <AppText>{record?.description}</AppText>
                 <AppText>Semester {record?.semester_of_study}</AppText>
+                <AppText>Course: {record?.course}</AppText>
+                <Box sx={{
+                    marginY: 2,
+                    display: 'flex'
+                }}>
+                   <AppText>Module: {record?.module_name}</AppText>
+                   <AppText>Code: {record?.module_code}</AppText>
+                </Box>
+                <AppText>Assessment Marks: {record?.assessment_mark}</AppText>
                 <Box sx={{
                     marginY: 2,
                     display: 'flex'
@@ -60,6 +68,14 @@ function PermissionDetailsComponent({ openDialog }) {
                     <Switch checked={record?.dean_signed_approve} disabled={true} />
                 </Box>
 
+                <Box sx={{
+                    marginY: 2,
+                    display: 'flex'
+                }}>
+                    <AppText>Registrar signature</AppText>
+                    <Switch checked={record?.registrar_signed_approve} disabled={true} />
+                </Box>
+
                 <Divider />
 
                 {
@@ -80,4 +96,4 @@ function PermissionDetailsComponent({ openDialog }) {
     );
 }
 
-export default PermissionDetailsComponent;
+export default CarryOverDetailsComponent;

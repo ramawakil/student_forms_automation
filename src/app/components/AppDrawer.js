@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled, useTheme} from "@mui/material/styles";
 import {Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { Link } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 
@@ -16,7 +17,8 @@ const DrawerHeader = styled('div')(({theme}) => ({
     justifyContent: 'flex-end',
 }));
 
-function AppDrawer({drawerWidth, open, handleDrawerClose}) {
+function AppDrawer({drawerWidth, open, handleDrawerClose, navList}) {
+    const [navLs, setNavLs] = useState(navList);
     const theme = useTheme();
 
     return (
@@ -41,30 +43,18 @@ function AppDrawer({drawerWidth, open, handleDrawerClose}) {
                 </DrawerHeader>
                 <Divider/>
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
+                    { navLs?.map((item) => (
+                        <Link to={item.link} style={{ textDecoration: 'none', color: 'grey' }} key={item.id}>
+                            <ListItem button key={item.link}>
                                 <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
+                                    {item.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={text}/>
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                                <ListItemText primary={item.name}/>
+                            </ListItem>
+                        </Link>
+                    )) }
                 </List>
                 <Divider/>
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                                </ListItemIcon>
-                                <ListItemText primary={text}/>
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
             </Drawer>
             <DrawerHeader/>
         </>

@@ -18,10 +18,14 @@ const ValidationSchema = Yup.object().shape({
     year_of_retake: Yup.string().required('Year required'),
 });
 
-function RetakesForm({handleClose}) {
+function RetakesForm({handleClose, record = null}) {
 
     const handleSubmit = async (values) => {
         console.log(values);
+    }
+
+    const handleSubmitEdit = async (values) => {
+
     }
 
     return (
@@ -31,16 +35,16 @@ function RetakesForm({handleClose}) {
             </DialogContentText>
             <AppForm
                 initialValues={{
-                    reason: '',
-                    request_description: '',
-                    course: '',
-                    module_name: '',
-                    module_code: '',
-                    semester_of_study: '',
-                    assessment_marks: '',
-                    year_of_retake: '',
+                    reason: `${record ? record?.request_reason : ""}`,
+                    request_description: `${record ? record?.request_description : ""}`,
+                    course: `${record ? record?.course : ""}`,
+                    module_name: `${record ? record?.module_name : ""}`,
+                    module_code: `${record ? record?.module_code : ""}`,
+                    semester_of_study: `${record ? record?.semester_of_study : ""}`,
+                    assessment_marks: `${record ? record?.assessment_mark : ""}`,
+                    year_of_retake: `${record ? record?.year_of_retake : ""}`,
                 }}
-                onSubmit={handleSubmit}
+                onSubmit={!record ? handleSubmit : handleSubmitEdit}
                 validationSchema={ValidationSchema}
             >
 

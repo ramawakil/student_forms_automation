@@ -6,6 +6,7 @@ import {useState} from "react";
 import HomePage from "./app/pages/home";
 import LoginPage from "./app/pages/loginPage";
 import StudentHome from "./app/pages/students/studentHome";
+import TeacherHome from "./app/pages/teacher/teacherHome";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                         <Route path="/login"
                                element={<LoginPage/>}/>
                         <Route path="/student-requests/*" element={<StudentHome/>}/>
+                        <Route path="/staff-requests/*" element={<TeacherHome/>}/>
                     </Routes>
                 </UserContext.Provider>
             </LoadingContext.Provider>

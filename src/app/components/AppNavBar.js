@@ -63,7 +63,7 @@ function AppNavBar({open = true, showButton, auth = true, handleLogOut, handleDr
                     </IconButton>)}
                     <IconButton color='white' onClick={handleClickHome}>
                         Company Title
-                        <Avatar sx={{ml: 1}} src='/logo192.png'/>
+                        <Avatar sx={{ml: 1}} src='/nit.png'/>
                     </IconButton>
 
                     <Box component="div" sx={{flexGrow: 1}}></Box>
