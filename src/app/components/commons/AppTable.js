@@ -55,6 +55,8 @@ function AppTable({pageSize = 10, data, columns, onClickEvent}) {
                     disableColumnMenu={true}
                     disableColumnFilter={true}
                     rowsPerPageOptions={[7]}
+                    autoHeight={true}
+                    autoPageSize={true}
                     onRowClick={(params) => onClickEvent(params)}
                 />
 

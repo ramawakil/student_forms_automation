@@ -1,15 +1,18 @@
-import React, {useEffect} from 'react';
-import {useLocation} from "react-router-dom";
+import React, {useContext, useEffect} from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
 import PermissionDetailsComponent from "./components/permissionDetailsComponent";
 import RetakeDetailsComponent from "./components/retakeDetailsComponent";
 import CarryOverDetailsComponent from "./components/carryOverDetailsComponent";
 import PostponedDetailsComponent from "./components/postponedDetailsComponent";
-import {Box, Dialog, DialogContent, DialogTitle} from "@mui/material";
+import {Alert, Box, Dialog, DialogContent, DialogTitle} from "@mui/material";
 import AppSelectInput from "../../components/AppSelectInput";
 import CarryOverForm from "./components/carryOverForm";
 import RetakesForm from "./components/retakesForm";
 import PermissionForm from "./components/permissionForm";
 import PostponedForm from "./components/postponedForm";
+import LoadingContext from "../../context/loadingContext";
+import studentsApi from "../../api/student";
+import {toast} from "react-toastify";
 
 function StudentRequestDetail(props) {
     const params = useLocation();
@@ -18,8 +21,9 @@ function StudentRequestDetail(props) {
     const [record, setRecord] = React.useState(null);
     const [request, setRequest] = React.useState(null);
     const [open, setOpen] = React.useState(false);
+    const { setLoading } = useContext(LoadingContext);
+    const navigate  = useNavigate();
 
-    console.log(recordObj);
 
     const handleClose = () => {
         setOpen(false);
@@ -36,6 +40,19 @@ function StudentRequestDetail(props) {
         setRecord(recordObj)
     }, [params])
 
+
+    const handleDeleteRequest = async () => {
+        setLoading(true);
+        try{
+            await studentsApi.deleteStudentRequest(record.id);
+            setLoading(false);
+            navigate('/student-requests')
+        }
+        catch (e) {
+            setLoading(false);
+            toast.error(e)
+        }
+    }
 
     return (
         <>

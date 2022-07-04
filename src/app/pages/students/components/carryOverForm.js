@@ -40,7 +40,8 @@ function CarryOverForm({ handleClose, record = null }) {
     const handleSubmitEdit = async (values) => {
         setLoading(true);
         try{
-            await studentsApi.createStudentRequest(values);
+            const res = await studentsApi.updateStudentRequest(record.id, values);
+            console.log(res);
             setLoading(false);
             handleClose();
         }
@@ -58,7 +59,7 @@ function CarryOverForm({ handleClose, record = null }) {
             <AppForm
                 initialValues={{
                     request_type: 'Carry-Over',
-                    reason: `${record ? record?.request_reason : ""}`,
+                    reason: `${record ? record?.reason : ""}`,
                     request_description: `${record ? record?.request_description : ""}`,
                     course: `${record ? record?.course : ""}`,
                     module_name: `${record ? record?.module_name : ""}`,

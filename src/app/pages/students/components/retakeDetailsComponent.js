@@ -1,21 +1,36 @@
-import React from 'react';
-import {useLocation} from "react-router-dom";
+import React, { useContext } from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
 import {Box, Divider, Switch} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AppText from "../../../components/AppText";
+import studentsApi from "../../../api/student";
+import {toast} from "react-toastify";
+import LoadingContext from "../../../context/loadingContext";
 
 function RetakeDetailsComponent({ openDialog }) {
     const params = useLocation();
     const record = params.state.data;
+    const { setLoading } = useContext(LoadingContext);
+    const navigate  = useNavigate();
 
     const handleEditForm = () => {
         openDialog()
     }
 
-    const handleDeleteForm = () => {
 
+    const handleDeleteRequest = async () => {
+        setLoading(true);
+        try{
+            await studentsApi.deleteStudentRequest(record.id);
+            setLoading(false);
+            navigate('/student-requests')
+        }
+        catch (e) {
+            setLoading(false);
+            toast.error(e)
+        }
     }
 
     return (
@@ -28,12 +43,14 @@ function RetakeDetailsComponent({ openDialog }) {
                     display: 'flex',
                 }}>
                     <Box sx={{ flexGrow: 1 }}>{record?.request_date}</Box>
-                    { (record?.staff_signed_count === 0 ) && <AppIconButton label='Edit Record' icon={<EditIcon color='secondary'/>} onPress={handleEditForm}/>}
-                    <AppIconButton label='Delete Record' icon={<DeleteForeverIcon color='warning' />} onPress={handleDeleteForm} />
+                    { (record?.staff_signed_count === 0 ) && (<>
+                        <AppIconButton label='Edit Record' icon={<EditIcon color='secondary'/>} onPress={handleEditForm}/>
+                        <AppIconButton label='Delete Record' icon={<DeleteForeverIcon color='warning' />} onPress={handleDeleteRequest} />
+                    </>)}
                 </Box>
 
                 <AppText>Eligibility of request: {record?.request_status}</AppText>
-                <AppText>{record?.request_reason} Reason for Retake a Course</AppText>
+                <AppText>{record?.reason} Reason for Retake a Course</AppText>
                 <AppText>{record?.description}</AppText>
                 <AppText>Semester {record?.semester_of_study}</AppText>
                 <AppText>Course: {record?.course}</AppText>

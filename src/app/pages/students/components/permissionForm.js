@@ -36,7 +36,16 @@ function PermissionForm({ handleClose, record = null }) {
     }
 
     const handleSubmitEdit = async (values) => {
-
+        setLoading(true);
+        try{
+            const res = await studentsApi.updateStudentRequest(record.id, values);
+            console.log(res);
+            setLoading(false);
+            handleClose();
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     return (
@@ -48,7 +57,7 @@ function PermissionForm({ handleClose, record = null }) {
             <AppForm
                 initialValues={{
                     request_type: 'Permission',
-                    reason: `${ record ? record?.request_reason : ""}`,
+                    reason: `${ record ? record?.reason : ""}`,
                     request_description: `${record ? record?.request_description : ""}`,
                     semester_of_study: `${record ? record?.semester_of_study : ""}`,
                 }}

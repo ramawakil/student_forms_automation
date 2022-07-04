@@ -1,22 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Box, Divider, Switch} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import AppText from "../../../components/AppText";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import LoadingContext from "../../../context/loadingContext";
+import studentsApi from "../../../api/student";
+import {toast} from "react-toastify";
 
 
 function PermissionDetailsComponent({ openDialog }) {
     const params = useLocation();
     const record = params.state.data;
+    const { setLoading } = useContext(LoadingContext);
+    const navigate  = useNavigate();
 
     const handleEditForm = () => {
         openDialog();
     }
 
-    const handleDeleteForm = () => {
-
+    const handleDeleteForm = async () => {
+        setLoading(true);
+        try{
+            await studentsApi.deleteStudentRequest(record.id);
+            setLoading(false);
+            navigate('/student-requests')
+        }
+        catch (e) {
+            setLoading(false);
+            toast.error(e)
+        }
     }
 
     return (

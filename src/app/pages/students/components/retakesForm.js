@@ -40,7 +40,17 @@ function RetakesForm({handleClose, record = null}) {
     }
 
     const handleSubmitEdit = async (values) => {
-
+        setLoading(true);
+        try{
+            const res = await studentsApi.updateStudentRequest(record.id, values);
+            console.log(res);
+            setLoading(false);
+            handleClose();
+            navigate('/student-requests')
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     return (
@@ -51,7 +61,7 @@ function RetakesForm({handleClose, record = null}) {
             <AppForm
                 initialValues={{
                     request_type: 'Retakes',
-                    reason: `${record ? record?.request_reason : ""}`,
+                    reason: `${record ? record?.reason : ""}`,
                     request_description: `${record ? record?.request_description : ""}`,
                     course: `${record ? record?.course : ""}`,
                     module_name: `${record ? record?.module_name : ""}`,
