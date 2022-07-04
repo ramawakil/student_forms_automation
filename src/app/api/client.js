@@ -7,7 +7,7 @@ import config from "../config/appConfig.json";
 const tokenJwt = 'accessTokenKey';
 axios.defaults.baseURL = config.apiEndPoint;
 
-axios.defaults.headers.common["Authorization"] = `JWT ${localStorage.getItem(tokenJwt)}`;
+// axios.defaults.headers.common["Authorization"] = `JWT ${localStorage.getItem(tokenJwt)}`;
 // add token to every request
 // axios.interceptors.request.use(
 //   (config) => {

@@ -5,6 +5,7 @@ import loaderAnimation from '../animations/loader.json';
 import authApi from "../api/auth";
 import {useNavigate} from "react-router-dom";
 import UserContext from "../context/userContext";
+import {toast} from "react-toastify";
 
 
 function HomePage(props) {
@@ -13,23 +14,28 @@ function HomePage(props) {
     const navigate = useNavigate();
 
 
-    const whichUser = async () => {
+    const whichUser = () => {
         // reroute according to label
         if (user.is_student) {
-            navigate('/farmer');
+            navigate('/student-requests');
         } else if (user.is_company) {
-            navigate('/company');
-        } else if (user.is_leader) {
-            navigate('/farmer-leader');
+            navigate('/staff-requests');
         }
+        else {
+            toast('You are not authorized to access this page');
+            toast('Please contact your administrator, you might not be a student or teacher');
+            navigate('/login');
+        }
+
     }
 
     const fetchUser = async () => {
+        setTimeout(() => {}, 1000)
         try {
             const res = await authApi.fetchUser();
             setUser(res.data);
         } catch (e) {
-            window.location = "/login";
+            navigate('/login');
         }
     };
 
@@ -40,21 +46,22 @@ function HomePage(props) {
         // initialize animation
         lottie.loadAnimation({
             container: anime.current,
-            renderer: 'svg',
+            renderer: 'canvas',
             loop: true,
             autoplay: true,
             animationData: loaderAnimation,
         });
        fetchUser();
+       whichUser()
 
     }, []);
 
-    React.useEffect(() => {
-        if (user) {
-            whichUser();
-        }
-
-    }, [user]);
+    // React.useEffect(() => {
+    //     if (user) {
+    //         whichUser();
+    //     }
+    //
+    // }, [user]);
 
 
 

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Box, Dialog, DialogContent, DialogTitle} from "@mui/material";
 import AppButton from "../../components/AppButton";
 import AddIcon from "@mui/icons-material/Add";
@@ -11,6 +11,7 @@ import PermissionForm from "./components/permissionForm";
 import PostponedForm from "./components/postponedForm";
 import * as Yup from "yup";
 import AppSelectInput from "../../components/AppSelectInput";
+import studentsApi from "../../api/student";
 
 
 const ValidationSchema = Yup.object().shape({
@@ -25,6 +26,7 @@ function StudentRequests(props) {
     const [studentRequests, setStudentRequest] = React.useState([]);
     const [requestType, setRequestType] = React.useState(0);
 
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -33,10 +35,30 @@ function StudentRequests(props) {
         setOpen(false);
     };
 
+    const handleFetchStudentRequests = async () => {
+        setLoading(true);
+        try{
+            const res = await studentsApi.getStudentRequests();
+           setStudentRequest(res.data);
+            setLoading(false);
+        }
+        catch(err){
+            setLoading(false);
+        }
+    }
+
     const handleRequestType = (value) => {
         console.log(value);
         setRequestType(value);
     }
+
+    useEffect(() => {
+        handleFetchStudentRequests();
+    }, [])
+
+    useEffect(() => {
+        handleFetchStudentRequests();
+    }, [open])
 
 
     return (

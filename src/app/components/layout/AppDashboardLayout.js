@@ -51,19 +51,23 @@ function AppDashboardLayout({ children, navList, openSideBar }) {
 
     return (
         <>
-            <Box sx={{
-                display: 'flex',
-            }}>
-                <CssBaseline />
-                <AppNavBar open={open} showButton={!open} handleDrawerClose={handleDrawerClose} handleDrawerOpen={handleDrawerOpen}/>
+            <CssBaseline/>
+            <Box sx={{display: 'flex', width: '100%'}}>
+
+                <AppNavBar open={open} auth={!!user} showButton={!open} handleDrawerClose={handleDrawerClose} handleDrawerOpen={handleDrawerOpen}/>
+                <AppDrawer navList={navList} drawerWidth={drawerWidth} open={open} handleDrawerClose={handleDrawerClose}/>
+
+                <Box sx={{
+                    flexGrow: 1,
+                    width: '100%',
+                }}>
+                    <Main open={open}>
+                        <Toolbar />
+                        {children}
+                    </Main>
+                </Box>
 
 
-
-                <Main open={open}>
-                    <AppDrawer drawerWidth={drawerWidth} open={open} handleDrawerClose={handleDrawerClose} navList={navList} />
-                    {/*<Toolbar/>*/}
-                    {children}
-                </Main>
             </Box>
         </>
     );

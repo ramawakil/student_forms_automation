@@ -9,6 +9,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import AppButton from "../AppButton";
 import LoadingContext from "../../context/loadingContext";
+import authApi from "../../api/auth";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 
 const ValidationSchema = Yup.object().shape({
@@ -27,11 +30,21 @@ function AppLogin({
                         passwordLabel = null
                   }) {
     const {setLoading} = useContext(LoadingContext);
+    const navigate = useNavigate();
 
-    const handleSubmit = (values) => {
+    const handleSubmit = async (values) => {
+        console.log(values);
         setLoading(true);
-        onSubmitForm(values);
-        return setLoading(true);
+        try {
+            await authApi.login(values);
+            setLoading(false);
+            navigate('/');
+
+        }
+        catch (error) {
+            setLoading(false);
+            toast.error(error)
+        }
     }
 
 
@@ -61,6 +74,7 @@ function AppLogin({
                         name='password'
                         label={passwordLabel ? passwordLabel : 'Password'}
                         backIcon={<LockIcon color='icon'/>}
+                        type='password'
                     />
 
                     <Box sx={{
@@ -71,12 +85,12 @@ function AppLogin({
                     }}>
 
                         <AppButton title='Forgot password?' variant='text' sx={{textTransform: 'none'}}/>
-                        <AppButton title='No account? Create now.' variant='text' sx={{textTransform: 'none'}}/>
+                        {/*<AppButton title='No account? Create now.' variant='text' sx={{textTransform: 'none'}}/>*/}
 
 
                     </Box>
 
-                    <AppSubmitButton title='submit' variant='contained' color='success'/>
+                    <AppSubmitButton title='LOGIN' variant='contained' color='success'/>
 
                 </AppForm>
 

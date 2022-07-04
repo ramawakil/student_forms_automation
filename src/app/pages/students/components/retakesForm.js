@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import * as Yup from "yup";
 import AppFormSelectField from "../../../components/forms/AppFormSelectField";
 import AppFormField from "../../../components/forms/AppFormField";
@@ -6,6 +6,9 @@ import {Box, DialogActions, DialogContentText, Stack} from "@mui/material";
 import AppButton from "../../../components/AppButton";
 import AppSubmitButton from "../../../components/forms/AppSubmitButton";
 import AppForm from "../../../components/forms/AppForm";
+import studentsApi from "../../../api/student";
+import LoadingContext from "../../../context/loadingContext";
+import {useNavigate} from "react-router-dom";
 
 const ValidationSchema = Yup.object().shape({
     reason: Yup.string().required('Reason required'),
@@ -14,14 +17,26 @@ const ValidationSchema = Yup.object().shape({
     module_name: Yup.string().required('Module name required'),
     module_code: Yup.string().required('Module code required'),
     semester_of_study: Yup.string().required('Semester required'),
-    assessment_marks: Yup.string().required('Assessment marks required'),
+    assessment_mark: Yup.string().required('Assessment marks required'),
     year_of_retake: Yup.string().required('Year required'),
 });
 
 function RetakesForm({handleClose, record = null}) {
+    const { setLoading } = useContext(LoadingContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
-        console.log(values);
+        setLoading(true);
+        try{
+            const res = await studentsApi.createStudentRequest(values);
+            console.log(res);
+            setLoading(false);
+            handleClose();
+            navigate('/student-requests');
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     const handleSubmitEdit = async (values) => {
@@ -35,13 +50,14 @@ function RetakesForm({handleClose, record = null}) {
             </DialogContentText>
             <AppForm
                 initialValues={{
+                    request_type: 'Retakes',
                     reason: `${record ? record?.request_reason : ""}`,
                     request_description: `${record ? record?.request_description : ""}`,
                     course: `${record ? record?.course : ""}`,
                     module_name: `${record ? record?.module_name : ""}`,
                     module_code: `${record ? record?.module_code : ""}`,
                     semester_of_study: `${record ? record?.semester_of_study : ""}`,
-                    assessment_marks: `${record ? record?.assessment_mark : ""}`,
+                    assessment_mark: `${record ? record?.assessment_mark : ""}`,
                     year_of_retake: `${record ? record?.year_of_retake : ""}`,
                 }}
                 onSubmit={!record ? handleSubmit : handleSubmitEdit}
@@ -103,7 +119,7 @@ function RetakesForm({handleClose, record = null}) {
                     />
 
                     <AppFormField
-                        name="assessment_marks"
+                        name="assessment_mark"
                         label='Assessment Marks'
                         placeholder="Assessment marks"
                         variant="standard"

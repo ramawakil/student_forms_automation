@@ -10,7 +10,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 
 
-const drawerWidth = 200;
+const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -62,7 +62,7 @@ function AppNavBar({open = true, showButton, auth = true, handleLogOut, handleDr
                         <MenuIcon/>
                     </IconButton>)}
                     <IconButton color='white' onClick={handleClickHome}>
-                        Company Title
+                        SPFA
                         <Avatar sx={{ml: 1}} src='/nit.png'/>
                     </IconButton>
 

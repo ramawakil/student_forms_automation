@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import * as Yup from "yup";
 import AppForm from "../../../components/forms/AppForm";
 import AppFormSelectField from "../../../components/forms/AppFormSelectField";
@@ -6,6 +6,9 @@ import {Box, DialogActions, DialogContentText, Stack} from "@mui/material";
 import AppFormField from "../../../components/forms/AppFormField";
 import AppButton from "../../../components/AppButton";
 import AppSubmitButton from "../../../components/forms/AppSubmitButton";
+import LoadingContext from "../../../context/loadingContext";
+import {useNavigate} from "react-router-dom";
+import studentsApi from "../../../api/student";
 
 const ValidationSchema = Yup.object().shape({
     reason: Yup.string().required('Reason required'),
@@ -15,9 +18,21 @@ const ValidationSchema = Yup.object().shape({
 
 
 function PermissionForm({ handleClose, record = null }) {
+    const { setLoading } = useContext(LoadingContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
-        console.log(values);
+        setLoading(true);
+        try{
+            const res = await studentsApi.createStudentRequest(values);
+            console.log(res);
+            setLoading(false);
+            handleClose();
+            navigate('/student-requests');
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     const handleSubmitEdit = async (values) => {
@@ -32,6 +47,7 @@ function PermissionForm({ handleClose, record = null }) {
 
             <AppForm
                 initialValues={{
+                    request_type: 'Permission',
                     reason: `${ record ? record?.request_reason : ""}`,
                     request_description: `${record ? record?.request_description : ""}`,
                     semester_of_study: `${record ? record?.semester_of_study : ""}`,

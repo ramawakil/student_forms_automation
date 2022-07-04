@@ -6,31 +6,24 @@ import {useNavigate} from "react-router-dom";
 
 
 
-
 const Columns = [
-    {field: 'username', headerName: 'Reg number', width: 120},
-    {field: 'phone', headerName: 'Phone number', width: 130},
-    {field: 'first_name', headerName: 'First Name'},
-    {field: 'last_name', headerName: 'Last Name'},
-    {field: 'genger', headerName: 'Gender'},
-    {field: 'degree_duration', headerName: 'Degree Duration'},
-    {field: 'programme', headerName: 'Programme'},
-    {field: 'department', headerName: 'department'},
-
+    { field: 'request_type', headerName: 'Request category', flex: 1 },
+    { field: 'reason', headerName: 'Reason', flex: 1 },
+    { field: 'semester_of_study', headerName: 'Semester', flex: 1 },
+    { field: 'request_date', headerName: 'Date', flex: 1 },
+    { field: 'request_status', headerName: 'Status', flex: 1 },
+    { field: 'staff_signed_count', headerName: 'Staff Signed', flex: 1 },
 
 ]
 
 const Rows = [
     {
         id: 1,
-        username: '123456789',
-        phone: '0712345678',
-        first_name: 'John',
-        last_name: 'Doe',
-        gender: 'Male',
-        degree_duration: '4',
-        programme: 'Computer Science',
-        department: 'IT and Engineering'
+        request_type: 'Retake',
+        request_reason: 'Financial',
+        request_status: 'Pending',
+        semester_of_study: '1',
+        year_of_retake: '2020',
     }
 ]
 
@@ -43,7 +36,7 @@ function StudentTableComponent({data}) {
 
     return (
         <>
-            <AppTable data={Rows} columns={Columns} onClickEvent={navigateToDetails} />
+            <AppTable data={data} columns={Columns} onClickEvent={navigateToDetails} />
         </>
     );
 }

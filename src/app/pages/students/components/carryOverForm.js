@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import AppForm from "../../../components/forms/AppForm";
 import * as Yup from 'yup';
 import AppFormField from "../../../components/forms/AppFormField";
@@ -6,6 +6,9 @@ import AppFormSelectField from "../../../components/forms/AppFormSelectField";
 import {Box, DialogActions, DialogContentText, Stack} from "@mui/material";
 import AppButton from "../../../components/AppButton";
 import AppSubmitButton from "../../../components/forms/AppSubmitButton";
+import LoadingContext from "../../../context/loadingContext";
+import studentsApi from "../../../api/student";
+import {useNavigate} from "react-router-dom";
 
 const ValidationSchema = Yup.object().shape({
     reason: Yup.string().required('Reason required'),
@@ -13,17 +16,37 @@ const ValidationSchema = Yup.object().shape({
     course: Yup.string().required('Course required'),
     module_name: Yup.string().required('Module name required'),
     module_code: Yup.string().required('Module code required'),
-    assessment_marks: Yup.string().required('Assessment marks required'),
+    assessment_mark: Yup.string().required('Assessment marks required'),
     semester_of_study: Yup.string().required('Semester required'),
 });
 
 function CarryOverForm({ handleClose, record = null }) {
+    const { setLoading } = useContext(LoadingContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
-        console.log(values);
+        setLoading(true);
+        try{
+            await studentsApi.createStudentRequest(values);
+            setLoading(false);
+            handleClose();
+            navigate('/student-requests');
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 
     const handleSubmitEdit = async (values) => {
+        setLoading(true);
+        try{
+            await studentsApi.createStudentRequest(values);
+            setLoading(false);
+            handleClose();
+        }
+        catch(err){
+            console.log(err);
+        }
 
     }
 
@@ -34,12 +57,13 @@ function CarryOverForm({ handleClose, record = null }) {
             </DialogContentText>
             <AppForm
                 initialValues={{
+                    request_type: 'Carry-Over',
                     reason: `${record ? record?.request_reason : ""}`,
                     request_description: `${record ? record?.request_description : ""}`,
                     course: `${record ? record?.course : ""}`,
                     module_name: `${record ? record?.module_name : ""}`,
                     module_code: `${record ? record?.module_code : ""}`,
-                    assessment_marks: `${record ? record?.assessment_mark : ""}`,
+                    assessment_mark: `${record ? record?.assessment_mark : ""}`,
                     semester_of_study: `${record ? record?.semester_of_study : ""}`,
                 }}
                 onSubmit={!record ? handleSubmit : handleSubmitEdit}
@@ -90,7 +114,7 @@ function CarryOverForm({ handleClose, record = null }) {
                     />
 
                     <AppFormField
-                        name="assessment_marks"
+                        name="assessment_mark"
                         label='Assessment Marks'
                         placeholder="Assessment marks"
                         variant="standard"

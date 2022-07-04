@@ -29,7 +29,7 @@ function PermissionDetailsComponent({ openDialog }) {
                     display: 'flex',
                 }}>
                     <Box sx={{ flexGrow: 1 }}>{record?.request_date}</Box>
-                    <AppIconButton label='Edit Record' icon={<EditIcon color='secondary' />} onPress={handleEditForm} />
+                    { (record?.staff_signed_count === 0 ) && <AppIconButton label='Edit Record' icon={<EditIcon color='secondary'/>} onPress={handleEditForm}/>}
                     <AppIconButton label='Delete Record' icon={<DeleteForeverIcon color='warning' />} onPress={handleDeleteForm} />
                 </Box>
 

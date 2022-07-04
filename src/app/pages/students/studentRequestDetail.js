@@ -19,6 +19,8 @@ function StudentRequestDetail(props) {
     const [request, setRequest] = React.useState(null);
     const [open, setOpen] = React.useState(false);
 
+    console.log(recordObj);
+
     const handleClose = () => {
         setOpen(false);
     }
@@ -38,7 +40,7 @@ function StudentRequestDetail(props) {
     return (
         <>
             { (request === 'Retake') && (<RetakeDetailsComponent openDialog={handleOpen} />) }
-            { (request === 'Carry-over') && (<CarryOverDetailsComponent openDialog={handleOpen} />) }
+            { (request === 'Carry-Over') && (<CarryOverDetailsComponent openDialog={handleOpen} />) }
             { (request === 'Postponed') && (<PostponedDetailsComponent openDialog={handleOpen} />) }
             { (request === 'Permission') && (<PermissionDetailsComponent openDialog={handleOpen} />) }
 
@@ -47,10 +49,10 @@ function StudentRequestDetail(props) {
                 <DialogContent>
                     {/*   add a condition to display form for carry-over, retakes, permission, postponed  */}
                     <Box sx={{p: 2}}>
-                        {request === 'Carry-over' && <CarryOverForm handleClose={handleClose} record={record} />}
-                        {request === 'Retake' && <RetakesForm handleClose={handleClose} record={record}  />}
-                        {request === 'Permission' && <PermissionForm handleClose={handleClose} record={record} />}
-                        {request === 'Postponed' && <PostponedForm handleClose={handleClose} record={record} />}
+                        {request === 'Carry-Over' && <CarryOverForm handleClose={handleClose} record={recordObj} />}
+                        {request === 'Retake' && <RetakesForm handleClose={handleClose} record={recordObj}  />}
+                        {request === 'Permission' && <PermissionForm handleClose={handleClose} record={recordObj} />}
+                        {request === 'Postponed' && <PostponedForm handleClose={handleClose} record={recordObj} />}
                     </Box>
 
                 </DialogContent>
