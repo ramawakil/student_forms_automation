@@ -33,17 +33,18 @@ function AppLogin({
     const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
-        console.log(values);
         setLoading(true);
         try {
-            await authApi.login(values);
+            const res = await authApi.login(values);
+            console.log(res)
             setLoading(false);
             navigate('/');
 
         }
         catch (error) {
             setLoading(false);
-            toast.error(error)
+            console.log(error)
+            toast(error.response.data.detail);
         }
     }
 
