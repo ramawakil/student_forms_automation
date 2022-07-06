@@ -58,6 +58,17 @@ export async function deleteStudentRequest(id) {
     });
 }
 
+
+export async function addStudentSignature(data) {
+    const access = await getJwt();
+    return await http.post(`${apiEndPoint}/signatures/`, data, {
+        headers: {
+            'Authorization': `JWT ${access}`
+        }
+    });
+}
+
+
 export async function getFarms() {
     const access = await getJwt();
     return await http.get(`${apiEndPoint}/farms/`, {
@@ -110,6 +121,7 @@ const studentsApi = {
     getStudentRequest,
     updateStudentRequest,
     deleteStudentRequest,
+    addStudentSignature,
 
 
 };

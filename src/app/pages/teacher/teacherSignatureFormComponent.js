@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import AppForm from "../../components/forms/AppForm";
 import * as Yup from 'yup';
 import AppFormField from "../../components/forms/AppFormField";
@@ -6,6 +6,9 @@ import AppFormSwitch from "../../components/forms/AppFormSwitch";
 import AppSubmitButton from "../../components/forms/AppSubmitButton";
 import {Box} from "@mui/material";
 import AppButton from "../../components/AppButton";
+import LoadingContext from "../../context/loadingContext";
+import studentsApi from "../../api/student";
+import {useNavigate} from "react-router-dom";
 
 const ValidationSchema = Yup.object().shape({
     comment: Yup.string().required('Comment is required'),
@@ -13,9 +16,24 @@ const ValidationSchema = Yup.object().shape({
 })
 
 function TeacherSignatureFormComponent({ record, hide }) {
+    const { setLoading } = useContext(LoadingContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (values) => {
-        console.log(values);
+        setLoading(true);
+        try {
+            await studentsApi.addStudentSignature({
+                request: record.id,
+                comments: values.comment,
+                approved: values.approved,
+            })
+            setLoading(false);
+            navigate('/staff-requests');
+        }
+        catch (error) {
+            setLoading(false);
+            console.log(error);
+        }
 
     }
 

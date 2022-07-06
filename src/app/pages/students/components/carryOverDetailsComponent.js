@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
-import {Box, Divider, Switch} from "@mui/material";
+import {Box, Divider, Stack, Switch} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -14,6 +14,8 @@ function CarryOverDetailsComponent({ openDialog }) {
     const record = params.state.data;
     const navigate  = useNavigate();
     const { setLoading } = useContext(LoadingContext);
+
+    console.log(record);
 
     const handleEditForm = () => {
         openDialog();
@@ -32,6 +34,13 @@ function CarryOverDetailsComponent({ openDialog }) {
         }
     }
 
+    const handleApprovedText = (approve) => {
+        if (approve) {
+            return 'Approved';
+        }
+        return 'Not Approved';
+    }
+
     return (
         <>
             <Box sx={{
@@ -42,8 +51,11 @@ function CarryOverDetailsComponent({ openDialog }) {
                     display: 'flex',
                 }}>
                     <Box sx={{ flexGrow: 1 }}>{record?.request_date}</Box>
-                    { (record?.staff_signed_count === 0 ) && <AppIconButton label='Edit Record' icon={<EditIcon color='secondary'/>} onPress={handleEditForm}/>}
-                    <AppIconButton label='Delete Record' icon={<DeleteForeverIcon color='warning' />} onPress={handleDeleteForm} />
+                    { (record?.staff_signed_count === 0 ) && (<>
+                        <AppIconButton label='Edit Record' icon={<EditIcon color='secondary'/>} onPress={handleEditForm}/>
+                        <AppIconButton label='Delete Record' icon={<DeleteForeverIcon color='warning' />} onPress={handleDeleteForm} />
+                    </>)}
+
                 </Box>
 
                 <AppText>Eligibility of request: {record.request_status}</AppText>
@@ -90,13 +102,20 @@ function CarryOverDetailsComponent({ openDialog }) {
                     <Switch checked={record?.registrar_signed_approve} disabled={true} />
                 </Box>
 
-                <Divider />
+                <Divider sx={{ marginY: 2 }} color='accent' />
 
                 {
                     record?.signatures ? (
-                        record?.signatures.maps((signature) => {
-                            <AppText>{signature.comments}</AppText>
-                        })
+                        record?.signatures.map((signature) =>
+                            <>
+                                <Stack direction='row' spacing={3}>
+                                    <AppText>Badge ID: <Box component='span' color='icon.main' >{signature.staff}</Box></AppText>
+                                    <AppText>Comments: <Box component='span' color='icon.main' >{signature.comments}</Box></AppText>
+                                    <AppText>{handleApprovedText(signature.approved)}</AppText>
+                                    <AppText>{signature.signature_date}</AppText>
+                                </Stack>
+                            </>
+                        )
                     ) : (
                         <AppText variant='h6' color='accent.main'>No Feedback yet</AppText>
                     )

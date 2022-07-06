@@ -16,12 +16,12 @@ const teacherNavList = [
         link: '/staff-requests',
         icon: <HomeIcon/>
     },
-    {
-        id: 1,
-        name: 'Add Student',
-        link: '/staff-requests/registrar',
-        icon: <HowToRegIcon/>
-    }
+    // {
+    //     id: 1,
+    //     name: 'Add Student',
+    //     link: '/staff-requests/registrar',
+    //     icon: <HowToRegIcon/>
+    // }
 ]
 
 function TeacherHome(props) {

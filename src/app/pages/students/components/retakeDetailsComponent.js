@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
-import {Box, Divider, Switch} from "@mui/material";
+import {Box, Divider, Stack, Switch} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -32,6 +32,14 @@ function RetakeDetailsComponent({ openDialog }) {
             toast.error(e)
         }
     }
+
+    const handleApprovedText = (approve) => {
+        if (approve) {
+            return 'Approved';
+        }
+        return 'Not Approved';
+    }
+
 
     return (
         <>
@@ -80,13 +88,20 @@ function RetakeDetailsComponent({ openDialog }) {
                     <Switch checked={record?.registrar_signed_approve} disabled={true} />
                 </Box>
 
-                <Divider />
+                <Divider sx={{ marginY: 2 }} color='accent' />
 
                 {
                     record?.signatures ? (
-                        record?.signatures.maps((signature) => {
-                            <AppText>{signature.comments}</AppText>
-                        })
+                        record?.signatures.map((signature) =>
+                            <>
+                                <Stack direction='row' spacing={3}>
+                                    <AppText>Badge ID: <Box component='span' color='icon.main' >{signature.staff}</Box></AppText>
+                                    <AppText>Comments: <Box component='span' color='icon.main' >{signature.comments}</Box></AppText>
+                                    <AppText>{handleApprovedText(signature.approved)}</AppText>
+                                    <AppText>{signature.signature_date}</AppText>
+                                </Stack>
+                            </>
+                        )
                     ) : (
                         <AppText variant='h6' color='accent.main'>No Feedback yet</AppText>
                     )

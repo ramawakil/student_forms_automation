@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box} from "@mui/material";
+import {Box, Divider} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
 import AppText from "../../../components/AppText";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
@@ -8,9 +8,15 @@ import TeacherSignatureFormComponent from "../teacherSignatureFormComponent";
 
 function TeacherPostponedDetailsComponent({record}) {
     const [signFormVisible, setSignFormVisible] = useState(false);
+    const [student, setStudent] = useState(record.student);
+    console.log(record);
 
     const handleShowForm = () => {
-        setSignFormVisible(true)
+        setSignFormVisible(true);
+    }
+
+    const handleHideForm = () => {
+        setSignFormVisible(false);
     }
 
 
@@ -20,16 +26,18 @@ function TeacherPostponedDetailsComponent({record}) {
                 <Box sx={{
                     display: 'flex',
                 }}>
-                    <Box sx={{flexGrow: 1}}>{record?.request_date}</Box>
+                    <Box sx={{flexGrow: 1}}>{record?.request_type} Request Made at {record?.request_date}</Box>
                 </Box>
 
-                <AppText>{record?.student?.user} of {record?.student?.user?.username}</AppText>
+                <AppText>{record?.student?.user.first_name} of Registration number. {record?.student?.user?.username}, Taking {record?.student?.programme}</AppText>
+
 
 
                 <AppText>Eligibility of request: {record.request_status}</AppText>
-                <AppText>{record?.request_reason} Reason for Postpone a Course</AppText>
-                <AppText>{record?.description}</AppText>
+                <AppText>Had {record?.reason} Reason for Postpone a Course</AppText>
+                <AppText>{record?.request_description}</AppText>
                 <AppText>Semester {record?.semester_of_study}</AppText>
+                <Divider sx={{ marginY: 2 }} color='accent' />
 
                 <AppText>{record?.starting_date}</AppText>
                 <AppText>{record?.ending_date}</AppText>
@@ -48,7 +56,7 @@ function TeacherPostponedDetailsComponent({record}) {
                 </Box>}
 
                 {
-                    signFormVisible && <TeacherSignatureFormComponent record={null}/>
+                    signFormVisible && <TeacherSignatureFormComponent record={record} hide={handleHideForm}/>
                 }
 
             </Box>

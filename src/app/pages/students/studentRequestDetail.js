@@ -60,6 +60,7 @@ function StudentRequestDetail(props) {
             { (request === 'Carry-Over') && (<CarryOverDetailsComponent openDialog={handleOpen} />) }
             { (request === 'Postponed') && (<PostponedDetailsComponent openDialog={handleOpen} />) }
             { (request === 'Permission') && (<PermissionDetailsComponent openDialog={handleOpen} />) }
+            { (request === 'Appeal') && (<PermissionDetailsComponent openDialog={handleOpen} />) }
 
             <Dialog open={open} onClose={handleClose} maxWidth='md' sx={{width: '100%'}} fullWidth>
                 <DialogTitle>Update the request</DialogTitle>

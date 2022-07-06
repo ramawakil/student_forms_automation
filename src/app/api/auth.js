@@ -26,6 +26,17 @@ export async function fetchUser() {
     });
 }
 
+
+export async function CreateStudentAccount(data) {
+    const access = await getJwt();
+    return await http.post(`${apiEndPoint}/auth/users/`, data, {
+        headers: {
+            'Authorization': `JWT ${access}`
+        }
+    });
+}
+
+
 export async function loginWithJwt(jwt) {
     await localStorage.setItem(tokenAccess, JSON.stringify(jwt.access));
 }
@@ -53,7 +64,8 @@ const authApi = {
     logout,
     getCurrentUser,
     getJwt,
-    fetchUser
+    fetchUser,
+    CreateStudentAccount
 };
 
 export default authApi;

@@ -3,11 +3,11 @@ import {useNavigate} from "react-router-dom";
 import AppTable from "../../components/commons/AppTable";
 
 const Columns = [
-    { field: 'request_type', headerName: 'Request category', width: 160 },
-    { field: 'request_reason', headerName: 'Reason'  },
-    { field: 'request_status', headerName: 'Status' },
-    { field: 'semester_of_study', headerName: 'Semester' },
-    { field: 'year_of_retake', headerName: 'Year' }
+    { field: 'request_type', headerName: 'Request category', flex: 1 },
+    { field: 'reason', headerName: 'Reason', flex: 1 },
+    { field: 'semester_of_study', headerName: 'Semester', flex: 1 },
+    { field: 'request_date', headerName: 'Date', flex: 1 },
+    { field: 'request_status', headerName: 'Status', flex: 1 },
 
 ]
 
@@ -32,7 +32,7 @@ function TeacherRequestTableComponent({data}) {
 
     return (
         <>
-            <AppTable data={students} columns={Columns} onClickEvent={navigateToDetails}/>
+            <AppTable data={data} columns={Columns} onClickEvent={navigateToDetails}/>
         </>
     );
 }

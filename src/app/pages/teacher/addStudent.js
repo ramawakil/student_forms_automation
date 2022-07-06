@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack} from "@mui/material";
 import AppTextInput from "../../components/AppTextInput";
 import AppButton from "../../components/AppButton";
@@ -9,6 +9,9 @@ import AppFormSelectField from "../../components/forms/AppFormSelectField";
 import AppFormField from "../../components/forms/AppFormField";
 import AppSubmitButton from "../../components/forms/AppSubmitButton";
 import * as Yup from "yup";
+import LoadingContext from "../../context/loadingContext";
+import studentsApi from "../../api/student";
+import authApi from "../../api/auth";
 
 
 const ValidationSchema = Yup.object().shape({
@@ -16,6 +19,7 @@ const ValidationSchema = Yup.object().shape({
     phone: Yup.string().required('Phone is required'),
     first_name: Yup.string().required('First name is required'),
     last_name: Yup.string().required('Last name is required'),
+    email: Yup.string().required('Email is required'),
     gender: Yup.string(),
     degree_duration: Yup.string().required('Degree duration is required'),
     start_year: Yup.string().required('Start year is required'),
@@ -27,7 +31,8 @@ function AddStudent(props) {
     const [open, setOpen] = React.useState(false);
     const [students, setStudents] = useState([])
     // const [error, setError] = React.useState(null);
-    // const {setLoading} = useContext(LoadingContext);
+    const {setLoading} = useContext(LoadingContext);
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -37,7 +42,27 @@ function AddStudent(props) {
         setOpen(false);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async (values) => {
+        console.log(values);
+        setLoading(true);
+        try {
+            const res = await authApi.CreateStudentAccount({
+                username: values.username,
+                phone: values.phone,
+                first_name: values.first_name,
+                last_name: values.last_name,
+                email: values.email,
+                gender: values.gender,
+                is_student: true,
+                password: "123"
+            })
+            console.log(res);
+            setLoading(false);
+        }
+        catch (error) {
+            setLoading(false);
+            console.log(error);
+        }
 
     }
 

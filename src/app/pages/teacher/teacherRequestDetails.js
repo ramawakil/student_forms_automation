@@ -23,16 +23,17 @@ function TeacherRequestDetails(props) {
 
 
     useEffect(() => {
+        console.log(recordObj?.request_type);
         setRequest(recordObj?.request_type)
         setRecord(recordObj)
     }, [params])
 
     return (
         <>
-            {(request === 'Retake') && (<TeacherRetakeDetailsComponent/>)}
-            {(request === 'Carry-over') && (<TeacherCarryOverDetailsComponent/>)}
-            {(request === 'Postponed') && (<TeacherPostponedDetailsComponent/>)}
-            {(request === 'Permission') && (<TeacherPermissionDetailsComponent/>)}
+            { (request === 'Retake') && (<TeacherRetakeDetailsComponent record={recordObj}/>) }
+            { (request === 'Carry-Over') && (<TeacherCarryOverDetailsComponent record={recordObj} />) }
+            { (request === 'Postponed') && (<TeacherPostponedDetailsComponent record={recordObj} />) }
+            { (request === 'Permission') && (<TeacherPermissionDetailsComponent record={recordObj} />) }
 
         </>
     );

@@ -18,7 +18,7 @@ function HomePage(props) {
         // reroute according to label
         if (user.is_student) {
             navigate('/student-requests');
-        } else if (user.is_company) {
+        } else if (user.is_college_staff) {
             navigate('/staff-requests');
         }
         else {
@@ -52,16 +52,16 @@ function HomePage(props) {
             animationData: loaderAnimation,
         });
        fetchUser();
-       whichUser()
+       // whichUser()
 
     }, []);
 
-    // React.useEffect(() => {
-    //     if (user) {
-    //         whichUser();
-    //     }
-    //
-    // }, [user]);
+    React.useEffect(() => {
+        if (user) {
+            whichUser();
+        }
+
+    }, [user]);
 
 
 

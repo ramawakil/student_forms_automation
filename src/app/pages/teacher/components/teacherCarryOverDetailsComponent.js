@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box} from "@mui/material";
+import {Box, Divider} from "@mui/material";
 import AppIconButton from "../../../components/AppIconButton";
 import AppText from "../../../components/AppText";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
@@ -22,15 +22,20 @@ function TeacherCarryOverDetailsComponent({record}) {
                 <Box sx={{
                     display: 'flex',
                 }}>
-                    <Box sx={{flexGrow: 1}}>{record?.request_date}</Box>
+                    <Box sx={{flexGrow: 1}}>{record?.request_type} Request Made at {record?.request_date}</Box>
                 </Box>
-                <AppText>{record?.student.name} of {record?.student.user.username}</AppText>
+                <AppText>{record?.student?.user.first_name} of Registration number. {record?.student?.user?.username}, Taking {record?.student?.programme}</AppText>
+
+                <Divider sx={{ marginY: 2 }} color='accent' />
 
                 <AppText>Eligibility of request: {record.request_status}</AppText>
-                <AppText>{record?.request_reason} Reason for Carry Over</AppText>
-                <AppText>{record?.description}</AppText>
+                <AppText>Had {record?.reason} Reason for Postpone a Course</AppText>
+                <Divider sx={{ marginY: 2 }} color='accent' />
+                <AppText>{record?.request_description}</AppText>
+                <Divider sx={{ marginY: 2 }} color='accent' />
                 <AppText>Semester {record?.semester_of_study}</AppText>
                 <AppText>Course: {record?.course}</AppText>
+                <Divider sx={{ marginY: 2 }} color='accent' />
                 <Box sx={{
                     marginY: 2,
                     display: 'flex'
@@ -52,7 +57,7 @@ function TeacherCarryOverDetailsComponent({record}) {
                 </Box>}
 
                 {
-                    signFormVisible && <TeacherSignatureFormComponent hide={handleHideForm} record={null}/>
+                    signFormVisible && <TeacherSignatureFormComponent hide={handleHideForm} record={record}/>
                 }
 
             </Box>
