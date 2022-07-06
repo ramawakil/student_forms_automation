@@ -36,7 +36,6 @@ function AppLogin({
         setLoading(true);
         try {
             const res = await authApi.login(values);
-            console.log(res)
             setLoading(false);
             navigate('/');
 
