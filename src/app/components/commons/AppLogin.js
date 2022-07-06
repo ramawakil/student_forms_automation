@@ -35,7 +35,7 @@ function AppLogin({
     const handleSubmit = async (values) => {
         setLoading(true);
         try {
-            const res = await authApi.login(values);
+            await authApi.login(values);
             setLoading(false);
             navigate('/');
 
