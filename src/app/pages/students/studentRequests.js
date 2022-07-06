@@ -98,6 +98,7 @@ function StudentRequests(props) {
                             {value: 1, label: 'Retakes'},
                             {value: 2, label: 'Permission'},
                             {value: 3, label: 'Postponed'},
+                            {value: 4, label: 'Appeal'},
                         ]}
                         setValue={(value) => setRequestType(value)}
                     />
@@ -109,6 +110,7 @@ function StudentRequests(props) {
                         {requestType === 0 && <CarryOverForm handleClose={handleClose}/>}
                         {requestType === 1 && <RetakesForm handleClose={handleClose}/>}
                         {requestType === 2 && <PermissionForm handleClose={handleClose}/>}
+                        {requestType === 4 && <PermissionForm handleClose={handleClose}/>}
                         {requestType === 3 && <PostponedForm handleClose={handleClose}/>}
                     </Box>
 
