@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
+import authApi from "../api/auth";
 
 
 const drawerWidth = 240;
@@ -32,6 +33,12 @@ const AppBar = styled(MuiAppBar, {
 
 function AppNavBar({open = true, showButton, auth = true, handleLogOut, handleDrawerOpen}) {
     const navigate = useNavigate();
+
+    const handleLogoutFunc = () => {
+        handleLogOut()
+        authApi.logout()
+        navigate('/login')
+    }
 
 
     const handleClickHome = () => {
@@ -72,7 +79,7 @@ function AppNavBar({open = true, showButton, auth = true, handleLogOut, handleDr
                                 <>
                                     <AppIconButton icon={<AccountCircleIcon color='white'/>}
                                                    onPress={handleClickProfile} label='Profile'/>
-                                    <AppIconButton icon={<LogoutIcon color='white'/>} onPress={handleLogOut}
+                                    <AppIconButton icon={<LogoutIcon color='white'/>} onPress={handleLogoutFunc}
                                                    label='Logout'/>
                                 </>
                             )
