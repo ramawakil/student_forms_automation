@@ -30,7 +30,7 @@ function TeacherRequestDetails(props) {
 
     return (
         <>
-            { (request === 'Retake') && (<TeacherRetakeDetailsComponent record={recordObj}/>) }
+            { (request === 'Retakes') && (<TeacherRetakeDetailsComponent record={recordObj}/>) }
             { (request === 'Carry-Over') && (<TeacherCarryOverDetailsComponent record={recordObj} />) }
             { (request === 'Postponed') && (<TeacherPostponedDetailsComponent record={recordObj} />) }
             { (request === 'Permission') && (<TeacherPermissionDetailsComponent record={recordObj} />) }
