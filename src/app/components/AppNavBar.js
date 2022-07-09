@@ -35,7 +35,6 @@ function AppNavBar({open = true, showButton, auth = true, handleLogOut, handleDr
     const navigate = useNavigate();
 
     const handleLogoutFunc = () => {
-        handleLogOut()
         authApi.logout()
         navigate('/login')
     }
@@ -80,7 +79,7 @@ function AppNavBar({open = true, showButton, auth = true, handleLogOut, handleDr
                                     <AppIconButton icon={<AccountCircleIcon color='white'/>}
                                                    onPress={handleClickProfile} label='Profile'/>
                                     <AppIconButton icon={<LogoutIcon color='white'/>} onPress={handleLogoutFunc}
-                                                   label='Logout'/>
+                                                   label='Logout' />
                                 </>
                             )
                             :

@@ -8,6 +8,7 @@ import AppText from "../../../components/AppText";
 import LoadingContext from "../../../context/loadingContext";
 import studentsApi from "../../../api/student";
 import {toast} from "react-toastify";
+import PrintIcon from "@mui/icons-material/Print";
 
 function PostponedDetailsComponent({ openDialog }) {
     const params = useLocation();
@@ -39,6 +40,11 @@ function PostponedDetailsComponent({ openDialog }) {
         return 'Not Approved';
     }
 
+    const handlePrint = () => {
+        window.print();
+    }
+
+
 
     return (
         <>
@@ -46,6 +52,7 @@ function PostponedDetailsComponent({ openDialog }) {
 
 
             }}>
+                <AppIconButton label='Print' icon={<PrintIcon />} onPress={handlePrint} />
                 <Box sx={{
                     display: 'flex',
                 }}>

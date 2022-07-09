@@ -8,6 +8,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import LoadingContext from "../../../context/loadingContext";
 import studentsApi from "../../../api/student";
 import {toast} from "react-toastify";
+import PrintIcon from "@mui/icons-material/Print";
 
 
 function PermissionDetailsComponent({ openDialog }) {
@@ -40,6 +41,11 @@ function PermissionDetailsComponent({ openDialog }) {
         return 'Not Approved';
     }
 
+    const handlePrint = () => {
+        window.print();
+    }
+
+
 
     return (
         <>
@@ -50,6 +56,7 @@ function PermissionDetailsComponent({ openDialog }) {
                 <Box sx={{
                     display: 'flex',
                 }}>
+                    <AppIconButton label='Print' icon={<PrintIcon />} onPress={handlePrint} />
                     <Box sx={{ flexGrow: 1 }}>{record?.request_date}</Box>
                     { (record?.staff_signed_count === 0 ) && (
                         <>

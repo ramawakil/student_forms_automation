@@ -8,6 +8,8 @@ import AppText from "../../../components/AppText";
 import studentsApi from "../../../api/student";
 import {toast} from "react-toastify";
 import LoadingContext from "../../../context/loadingContext";
+import PrintIcon from '@mui/icons-material/Print';
+
 
 function RetakeDetailsComponent({ openDialog }) {
     const params = useLocation();
@@ -41,12 +43,18 @@ function RetakeDetailsComponent({ openDialog }) {
     }
 
 
+    const handlePrint = () => {
+        window.print();
+    }
+
+
     return (
         <>
             <Box sx={{
 
 
             }}>
+                <AppIconButton label='Print' icon={<PrintIcon />} onPress={handlePrint} />
                 <Box sx={{
                     display: 'flex',
                 }}>
