@@ -1,4 +1,4 @@
 {
-  "apiEndPoint": "https://srsystem-backend.herokuapp.com",
+  "apiEndPoint": "https://web-production-ec14.up.railway.app",
   "appName": "Student Procedural Forms Automation"
 }
